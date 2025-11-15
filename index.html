@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Love For You</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="pages">
+            <!-- Page 1: Love -->
+            <div class="page page-1">
+                <div class="content">
+                    <h1>I Love You</h1>
+                    <p>Every moment with you feels like a beautiful dream. Your smile brightens my day, and your love fills my heart with joy.</p>
+                    <button class="btn" onclick="nextPage()">Next</button>
+                </div>
+            </div>
+            
+            <!-- Page 2: Blessed -->
+            <div class="page page-2">
+                <div class="content">
+                    <h1>I'm So Blessed</h1>
+                    <p>Having you in my life is the greatest blessing I could ever ask for. You make every day special and fill my world with happiness.</p>
+                    <div>
+                        <button class="btn" onclick="prevPage()">Back</button>
+                        <button class="btn" onclick="nextPage()">Next</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Page 3: Strength -->
+            <div class="page page-3">
+                <div class="content">
+                    <h1>Our Strength</h1>
+                    <p>The challenges we face together don't weaken us - they make our bond stronger. Every disagreement is an opportunity to understand each other better and grow closer.</p>
+                    <button class="btn" onclick="prevPage()">Back</button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="navigation">
+            <div class="dot active" onclick="goToPage(0)"></div>
+            <div class="dot" onclick="goToPage(1)"></div>
+            <div class="dot" onclick="goToPage(2)"></div>
+        </div>
+    </div>
+
+    <script>
+        let currentPage = 0;
+        const pages = document.querySelector('.pages');
+        const dots = document.querySelectorAll('.dot');
+        
+        // Create floating elements
+        function createFloatingElements() {
+            const page1 = document.querySelector('.page-1');
+            const page2 = document.querySelector('.page-2');
+            const page3 = document.querySelector('.page-3');
+            
+            // Hearts for page 1
+            for (let i = 0; i < 15; i++) {
+                const heart = document.createElement('div');
+                heart.className = 'heart';
+                heart.innerHTML = '❤';
+                heart.style.left = Math.random() * 100 + '%';
+                heart.style.top = Math.random() * 100 + '%';
+                heart.style.animationDelay = Math.random() * 5 + 's';
+                page1.appendChild(heart);
+            }
+            
+            // Blessings for page 2
+            for (let i = 0; i < 12; i++) {
+                const blessing = document.createElement('div');
+                blessing.className = 'blessing';
+                blessing.innerHTML = '✨';
+                blessing.style.left = Math.random() * 100 + '%';
+                blessing.style.top = Math.random() * 100 + '%';
+                blessing.style.animationDelay = Math.random() * 3 + 's';
+                page2.appendChild(blessing);
+            }
+            
+            // Strength symbols for page 3
+            for (let i = 0; i < 10; i++) {
+                const strength = document.createElement('div');
+                strength.className = 'strength';
+                strength.innerHTML = '💪';
+                strength.style.left = Math.random() * 100 + '%';
+                strength.style.top = Math.random() * 100 + '%';
+                strength.style.animationDelay = Math.random() * 2 + 's';
+                page3.appendChild(strength);
+            }
+        }
+        
+        function nextPage() {
+            if (currentPage < 2) {
+                currentPage++;
+                updatePage();
+            }
+        }
+        
+        function prevPage() {
+            if (currentPage > 0) {
+                currentPage--;
+                updatePage();
+            }
+        }
+        
+        function goToPage(pageIndex) {
+            currentPage = pageIndex;
+            updatePage();
+        }
+        
+        function updatePage() {
+            pages.style.transform = `translateX(-${currentPage * 33.333}%)`;
+            
+            // Update dots
+            dots.forEach((dot, index) => {
+                if (index === currentPage) {
+                    dot.classList.add('active');
+                } else {
+                    dot.classList.remove('active');
+                }
+            });
+            
+            // Add fade-in animation to content
+            const currentContent = document.querySelectorAll('.page')[currentPage].querySelector('.content');
+            currentContent.classList.remove('fade-in');
+            void currentContent.offsetWidth; // Trigger reflow
+            currentContent.classList.add('fade-in');
+        }
+        
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            createFloatingElements();
+            
+            // Add initial fade-in to first page
+            document.querySelector('.page-1 .content').classList.add('fade-in');
+        });
+    </script>
+</body>
+</html>
